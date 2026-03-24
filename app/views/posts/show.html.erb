@@ -1,0 +1,65 @@
+<% content_for :title, @post.title %>
+
+<div class="mb-4">
+  <%= link_to "← Back to posts", posts_path, class: "link link-hover text-sm text-base-content/60" %>
+</div>
+
+<article class="card bg-base-100 shadow-sm mb-8">
+  <div class="card-body prose max-w-none">
+    <div class="flex items-start justify-between gap-4 not-prose mb-4">
+      <div>
+        <h1 class="text-3xl font-bold"><%= @post.title %></h1>
+        <p class="text-base-content/60 text-sm mt-1">
+          by <span class="font-medium"><%= @post.user.username %></span>
+          &middot;
+          <%= @post.created_at.strftime("%B %-d, %Y") %>
+        </p>
+      </div>
+      <div class="flex gap-2 shrink-0">
+        <%= link_to "Edit", edit_post_path(@post), class: "btn btn-ghost btn-sm" %>
+        <%= button_to "Delete", @post, method: :delete,
+              class: "btn btn-error btn-sm btn-outline",
+              form: { data: { turbo_confirm: "Delete this post?" } } %>
+      </div>
+    </div>
+
+    <div class="whitespace-pre-wrap text-base-content/90 leading-relaxed"><%= @post.content %></div>
+  </div>
+</article>
+
+<section>
+  <h2 class="text-xl font-bold mb-4">
+    Comments
+    <span class="badge badge-neutral badge-sm align-middle ml-1"><%= @comments.size %></span>
+  </h2>
+
+  <% if @comments.any? %>
+    <div class="flex flex-col gap-3 mb-8">
+      <% @comments.each do |comment| %>
+        <div class="card bg-base-100 shadow-sm" id="<%= dom_id comment %>">
+          <div class="card-body py-4">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-sm"><%= comment.name %></span>
+              <div class="flex items-center gap-3">
+                <span class="text-xs text-base-content/40"><%= comment.created_at.strftime("%b %-d, %Y") %></span>
+                <%= button_to "×", post_comment_path(@post, comment), method: :delete,
+                      class: "btn btn-ghost btn-xs text-error",
+                      form: { data: { turbo_confirm: "Remove this comment?" } } %>
+              </div>
+            </div>
+            <p class="text-base-content/80 text-sm mt-1"><%= comment.content %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-base-content/40 text-sm mb-8">No comments yet. Be the first!</p>
+  <% end %>
+
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <h3 class="card-title text-base">Leave a comment</h3>
+      <%= render "comments/form", post: @post, comment: @comment %>
+    </div>
+  </div>
+</section>

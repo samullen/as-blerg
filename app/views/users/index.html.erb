@@ -1,0 +1,40 @@
+<% content_for :title, "Writers" %>
+
+<div class="flex items-center justify-between mb-8">
+  <h1 class="text-3xl font-bold">Writers</h1>
+</div>
+
+<% if @users.any? %>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <% @users.each do |user| %>
+      <div class="card bg-base-100 shadow-sm">
+        <div class="card-body">
+          <div class="flex items-center gap-4">
+            <div class="avatar placeholder">
+              <div class="bg-neutral text-neutral-content rounded-full w-12">
+                <span class="text-xl"><%= user.username.first.upcase %></span>
+              </div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h2 class="font-bold truncate"><%= user.username %></h2>
+              <p class="text-base-content/60 text-sm truncate"><%= user.email %></p>
+            </div>
+          </div>
+          <div class="card-actions justify-end mt-2">
+            <%= link_to "New Post", new_user_post_path(user), class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body items-center text-center py-16">
+      <p class="text-base-content/50 text-lg">No writers yet.</p>
+      <p class="text-base-content/40 text-sm mt-1">Create some users in the Rails console to get started.</p>
+      <div class="mockup-code mt-6 text-left text-sm">
+        <pre><code>User.create!(username: "alice", email: "alice@example.com")</code></pre>
+      </div>
+    </div>
+  </div>
+<% end %>

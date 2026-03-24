@@ -1,0 +1,12 @@
+<% content_for :title, "Edit post" %>
+
+<div class="mb-4">
+  <%= link_to "← Back to post", @post, class: "link link-hover text-sm text-base-content/60" %>
+</div>
+
+<div class="card bg-base-100 shadow-sm max-w-2xl mx-auto">
+  <div class="card-body">
+    <h1 class="card-title text-2xl mb-4">Edit Post</h1>
+    <%= render "form", post: @post %>
+  </div>
+</div>
