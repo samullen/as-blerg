@@ -26,16 +26,13 @@ test:
 production:
   primary:
     <<: *default
-    database: <%= ENV.fetch("DATABASE_URL") %>
+    url: <%= ENV.fetch("DATABASE_URL") %>
   cache:
     <<: *default
-    database: <%= ENV.fetch("DATABASE_URL") %>
-    migrations_paths: db/cache_migrate
+    url: <%= ENV.fetch("DATABASE_URL") %>
   queue:
     <<: *default
-    database: <%= ENV.fetch("DATABASE_URL") %>
-    migrations_paths: db/queue_migrate
+    url: <%= ENV.fetch("DATABASE_URL") %>
   cable:
     <<: *default
-    database: <%= ENV.fetch("DATABASE_URL") %>
-    migrations_paths: db/cable_migrate
+    url: <%= ENV.fetch("DATABASE_URL") %>
