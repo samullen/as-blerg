@@ -1,0 +1,33 @@
+<%= form_with(model: [post, comment], class: "flex flex-col gap-4") do |form| %>
+  <% if comment.errors.any? %>
+    <div role="alert" class="alert alert-error">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <ul>
+        <% comment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-control">
+    <%= form.label :name, "Your name", class: "label" %>
+    <%= form.text_field :name,
+          class: "input input-bordered w-full #{"input-error" if comment.errors[:name].any?}",
+          placeholder: "e.g. Jane Smith" %>
+  </div>
+
+  <div class="form-control">
+    <%= form.label :content, "Comment", class: "label" %>
+    <%= form.text_area :content,
+          rows: 4,
+          class: "textarea textarea-bordered w-full #{"textarea-error" if comment.errors[:content].any?}",
+          placeholder: "Share your thoughts..." %>
+  </div>
+
+  <div class="card-actions justify-end">
+    <%= form.submit "Post Comment", class: "btn btn-primary btn-sm" %>
+  </div>
+<% end %>

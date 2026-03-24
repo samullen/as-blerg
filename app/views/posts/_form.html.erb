@@ -1,0 +1,40 @@
+<%= form_with(model: defined?(user) && user ? [user, post] : post, class: "flex flex-col gap-4") do |form| %>
+  <% if post.errors.any? %>
+    <div role="alert" class="alert alert-error">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-control">
+    <%= form.label :title, class: "label" %>
+    <%= form.text_field :title,
+          class: "input input-bordered w-full #{"input-error" if post.errors[:title].any?}",
+          placeholder: "Enter a title" %>
+    <% if post.errors[:title].any? %>
+      <span class="label-text-alt text-error mt-1"><%= post.errors[:title].first %></span>
+    <% end %>
+  </div>
+
+  <div class="form-control">
+    <%= form.label :content, class: "label" %>
+    <%= form.text_area :content,
+          rows: 12,
+          class: "textarea textarea-bordered w-full #{"textarea-error" if post.errors[:content].any?}",
+          placeholder: "Write your post here..." %>
+    <% if post.errors[:content].any? %>
+      <span class="label-text-alt text-error mt-1"><%= post.errors[:content].first %></span>
+    <% end %>
+  </div>
+
+  <div class="card-actions justify-end mt-2">
+    <%= form.submit post.persisted? ? "Save Changes" : "Publish Post",
+          class: "btn btn-primary" %>
+  </div>
+<% end %>
