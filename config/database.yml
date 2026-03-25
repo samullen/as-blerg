@@ -26,13 +26,13 @@ test:
 production:
   primary:
     <<: *default
-    url: <%= ENV.fetch("DATABASE_URL") %>
+    url: <%= ENV.fetch("DATABASE_URL") { "postgresql://localhost/blerg_production" } %>
   cache:
     <<: *default
-    url: <%= ENV.fetch("DATABASE_URL") %>
+    url: <%= ENV.fetch("DATABASE_URL") { "postgresql://localhost/blerg_production" } %>
   queue:
     <<: *default
-    url: <%= ENV.fetch("DATABASE_URL") %>
+    url: <%= ENV.fetch("DATABASE_URL") { "postgresql://localhost/blerg_production" } %>
   cable:
     <<: *default
-    url: <%= ENV.fetch("DATABASE_URL") %>
+    url: <%= ENV.fetch("DATABASE_URL") { "postgresql://localhost/blerg_production" } %>
